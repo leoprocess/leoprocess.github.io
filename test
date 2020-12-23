@@ -1,1 +1,19 @@
-
+SELECT L.YYYY TargetYear, L.SITE, L.PLANT, L.BU, L.APP, L.PROCESS, L.LV1 AS LEVEL1, L.LV2 AS LEVEL2, L.LV3 AS LEVEL3, L.MG AS MAT_GRP, M.WGBEZ AS MAT_GRP_DESC, L.USER_ID AS SOURCER, U.EMPNAME AS SOURCERNAME, CONCAT(I.Q1, '%')as Q1, CONCAT(I.Q2, '%')as Q2, CONCAT(I.Q3, '%')as Q3, CONCAT(I.Q4, '%')as Q4, II.Y1, II.Y2, II.Y3
+                        FROM VW_LAST_CD_TARGET L 
+                        LEFT JOIN BCS_MGR.HR_HCM_VW_EMP01 U ON L.USER_ID = U.PERNR
+                        LEFT JOIN BCS_MGR.ODS_SAP_VW_T023T M ON L.MG = M.MATKL,
+                        (SELECT * 
+                                  FROM (SELECT * FROM 
+                                            (SELECT *  FROM VW_LAST_CD_TARGET WHERE 1=1  AND YYYY = '2020' AND DATA_TYPE = 'C' AND CD_TYPE = 'CD1' and MG = '4104B' )
+                                                PIVOT (
+                                                     SUM(CD_PERCENTAGE) FOR QUARTER_PRE IN ('Q1' AS "Q1",'Q2' as "Q2", 'Q3' as "Q3",'Q4' as "Q4"))
+                                            ) WHERE YEAR_PRE is null 
+                                      ) I, (SELECT *
+                                         FROM (SELECT * FROM 
+                                         (SELECT * FROM VW_LAST_CD_TARGET WHERE 1=1   AND YYYY = '2020' AND DATA_TYPE = 'C' AND CD_TYPE = 'CD1' and MG = '4104B' )
+                                                                PIVOT (
+                                                     SUM(CD_PERCENTAGE) FOR YEAR_PRE IN (2021 AS "Y1",2022 as "Y2", 2023 as "Y3") )
+                                            ) WHERE QUARTER_PRE = '-'
+                                      ) II
+WHERE 1 = 1   AND L.YYYY = '2020' AND L.DATA_TYPE = 'C' AND L.CD_TYPE = 'CD1' and L.MG = '4104B'
+GROUP BY L.YYYY, L.SITE, L.PLANT, L.BU, L.APP, L.PROCESS, L.LV1, L.LV2, L.LV3, L.MG, M.WGBEZ, L.USER_ID, U.EMPNAME, L.YEAR_PRE, L.DATA_TYPE, I.Q1, I.Q2, I.Q3, I.Q4, II.Y1, II.Y2, II.Y3 

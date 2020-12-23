@@ -17,3 +17,15 @@ SELECT L.YYYY TargetYear, L.SITE, L.PLANT, L.BU, L.APP, L.PROCESS, L.LV1 AS LEVE
                                       ) II
 WHERE 1 = 1   AND L.YYYY = '2020' AND L.DATA_TYPE = 'C' AND L.CD_TYPE = 'CD1' and L.MG = '4104B'
 GROUP BY L.YYYY, L.SITE, L.PLANT, L.BU, L.APP, L.PROCESS, L.LV1, L.LV2, L.LV3, L.MG, M.WGBEZ, L.USER_ID, U.EMPNAME, L.YEAR_PRE, L.DATA_TYPE, I.Q1, I.Q2, I.Q3, I.Q4, II.Y1, II.Y2, II.Y3 
+
+
+Select *
+From (
+  Select TYPE, Coalesce(YEAR, QUARTER) As Region, CD
+  From [CBDM_MainDB_Test].[dbo].[Test]
+) SourctData
+Pivot (
+  Sum(CD)
+  For Region In ([Q1], [Q2], [Q3], [Q4], [2021], [2022], [2023])) PivotData
+  where TYPE = 'A'
+  ;

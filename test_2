@@ -1,0 +1,95 @@
+create table  student(
+   level2 varchar(20),
+   supplier varchar(20),
+   score int
+);
+
+insert into student values('A','OneClass',82);
+insert into student values('A','OneClass',95);
+insert into student values('A','TwoClass',82);
+insert into student values('A','ThreeClass',40);
+insert into student values('A','ThreeClass',20);
+insert into student values('A','ThreeClass',95);
+insert into student values('A','TwoClass',40);
+insert into student values('A','TwoClass',3);
+insert into student values('B','FourClass',60);
+insert into student values('B','FourClass',10);
+insert into student values('B','FourClass',70);
+insert into student values('B','OneClass',60);
+insert into student values('B','OneClass',40);
+insert into student values('B','OneClass',90);
+insert into student values('B','OneClass',20);
+insert into student values('C','OneClass',82);
+insert into student values('C','OneClass',95);
+insert into student values('C','OneClass',82);
+insert into student values('C','TwoClass',40);
+insert into student values('C','TwoClass',20);
+insert into student values('C','ThreeClass',95);
+insert into student values('C','ThreeClass',40);
+insert into student values('C','ThreeClass',3);
+insert into student values('C','FourClass',60);
+insert into student values('D','OneClass',82);
+insert into student values('D','OneClass',95);
+insert into student values('D','TwoClass',82);
+insert into student values('D','ThreeClass',40);
+insert into student values('D','ThreeClass',20);
+insert into student values('D','ThreeClass',95);
+insert into student values('D','TwoClass',40);
+insert into student values('D','TwoClass',3);
+
+
+
+
+
+
+SELECT DISTINCT( level2 ), 
+               First_value(supplier) 
+                 over( 
+                   PARTITION BY level2 
+                   ORDER BY percentage DESC) AS top1, 
+               First_value(percentage) 
+                 over( 
+                   PARTITION BY level2 
+                   ORDER BY percentage DESC) AS score1, 
+               Nth_value(supplier, 2) 
+                 over( 
+                   PARTITION BY level2 
+                   ORDER BY percentage DESC ROWS BETWEEN unbounded preceding AND 
+                 unbounded following 
+                 )                      AS top2, 
+               Nth_value(percentage, 2) 
+                 over( 
+                   PARTITION BY level2 
+                   ORDER BY percentage DESC ROWS BETWEEN unbounded preceding AND 
+                 unbounded following 
+                 )                      AS score2, 
+               First_value(supplier) 
+                 over( 
+                   PARTITION BY level2 
+                   ORDER BY percentage)      AS top3, 
+               First_value(percentage) 
+                 over( 
+                   PARTITION BY level2 
+                   ORDER BY percentage)      AS score3 
+FROM   (
+select LEVEL2, SUPPLIER, PERCENTAGE from(
+select LEVEL2, SUPPLIER, PERCENTAGE,rank() over(partition by LEVEL2 order by PERCENTAGE) r from (
+
+select II.level2, II.SUPPLIER, II.total/I.alltotal*100 as percentage from (
+select level2, count(supplier) as alltotal from student
+group by level2
+)I,
+(
+SELECT DISTINCT(level2), supplier, total FROM(
+SELECT level2, supplier, count(supplier) as total FROM student 
+GROUP BY level2, supplier
+  ) ORDER BY level2, total DESC
+)II
+WHERE I.level2 = II.level2 
+  ))where r<=3 
+) 
+order by LEVEL2
+                  
+                  
+                  
+                  

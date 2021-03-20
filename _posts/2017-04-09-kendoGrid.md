@@ -31,7 +31,7 @@ tags:
 <pre>
   
 <div id="grid"></div>
-<script>
+
   function test(name, age){
   alert("name:" + name + "  age:" + age);
   };
@@ -82,5 +82,5 @@ $("#grid").kendoGrid({
             });
         }
 });
-</script>
+
 </pre>

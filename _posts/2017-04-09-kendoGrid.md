@@ -28,18 +28,7 @@ tags:
 
 範例如下:
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Kendo UI Snippet</title>
-
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.1.224/styles/kendo.default-v2.min.css"/>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2021.1.224/js/kendo.all.min.js"></script>
-</head>
-<body>
+<pre>
   
 <div id="grid"></div>
 <script>
@@ -94,5 +83,4 @@ $("#grid").kendoGrid({
         }
 });
 </script>
-</body>
-</html>
+</pre>

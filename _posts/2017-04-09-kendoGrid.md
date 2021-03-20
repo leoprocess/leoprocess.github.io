@@ -29,9 +29,6 @@ tags:
 範例如下:
 
 <pre>
-  
-<div id="grid"></div>
-
   function test(name, age){
   alert("name:" + name + "  age:" + age);
   };
@@ -82,5 +79,4 @@ $("#grid").kendoGrid({
             });
         }
 });
-
 </pre>

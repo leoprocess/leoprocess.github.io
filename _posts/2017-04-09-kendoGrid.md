@@ -22,9 +22,17 @@ tags:
 
 錯誤訊息:Uncaught SyntaxError: Invalid or unexpected token
 
-後來看了參數 發現和 空白 & "符號 有相當大的關係
+後來看了參數 發現和 空白 有相當大的關係
 
-所以就另外寫了方法將空白特別去除掉
+原來在createTemplateFor事件內 
+
+onclick test內放置的參數 習慣上都會寫成這樣 參數1, 參數2, 參數3 ....
+
+就是中間的空白導致onclick事件無法成功 
+
+後來改為 參數1,參數2,參數3,....
+
+就這樣好了  呵呵....
 
 範例如下:
 
@@ -32,15 +40,12 @@ tags:
   function test(name, age){
   alert("name:" + name + "  age:" + age);
   };
-  function replaceString(value) {
-    console.log(value.split(" ").join(""));
-        return value.split(" ").join("");
-    }
+  
   function createTemplateFor(columnName) {
     var template = "# var address = data['" + columnName + "']; #" +
         "# var splitaddr = address.split(','); #" +
         "# for (var i = 0; i < splitaddr.length; i++) { #" +
-        "<div onclick=test('#= replaceString(splitaddr[i]) #','#=age#')>#=splitaddr[i]#</div><br /> " +
+        "<div onclick=test('#= splitaddr[i] #','#=age#')>#=splitaddr[i]#</div><br /> " +
         "# } #";
 
     return template;

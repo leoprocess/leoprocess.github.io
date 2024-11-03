@@ -16,15 +16,15 @@
   <meta name="author" content="Leo">
   <meta name="keywords" content="">
   
-    <meta name="description" content="RabbitMQ簡介首先，讓我們簡單介紹一下RabbitMQ。它是一個開源消息代理，允許您的應用程式靈活地交換數據。在.NET環境中，RabbitMQ能夠使消息傳遞變得高效且可靠，是許多開發者的首選。 RabbitMQ的安裝與設置安裝RabbitMQ可能看起來像是攀登珠穆朗瑪峰，但實際上它比做一杯咖啡還簡單。我們將從官方網站下載RabbitMQ，並遵循步驟來在您的機器上設置它。別忘了確認Erlan">
+    <meta name="description" content="引言在現代應用程序開發中，日誌記錄是診斷、監控和分析系統運行狀態的重要工具。當應用程序規模擴大，涉及多個服務或節點時，傳統的日誌文件管理方式已無法滿足需求。ELK 堆疊（Elasticsearch、Logstash、Kibana）提供了強大的日誌集中收集、存儲和分析解決方案。本文將詳細介紹如何在 .NET 環境中，使用 ELK 堆疊實現日誌的集中化與分析。 認識 ELK 堆疊ELK 堆疊由三個開源">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在.NET中與RabbitMQ共舞：實務應用的藝術">
-<meta property="og:url" content="https://leoprocess.github.io/2019/08/27/2019-08-27-RabbitMQ/index.html">
+<meta property="og:title" content="使用 .NET 與 ELK Log集中與分析">
+<meta property="og:url" content="https://leoprocess.github.io/2023/12/19/2023-12-19-%E4%BD%BF%E7%94%A8%20.NET%20%E8%88%87%20ELK%20Log%E9%9B%86%E4%B8%AD%E8%88%87%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="leo200292 Blog">
-<meta property="og:description" content="RabbitMQ簡介首先，讓我們簡單介紹一下RabbitMQ。它是一個開源消息代理，允許您的應用程式靈活地交換數據。在.NET環境中，RabbitMQ能夠使消息傳遞變得高效且可靠，是許多開發者的首選。 RabbitMQ的安裝與設置安裝RabbitMQ可能看起來像是攀登珠穆朗瑪峰，但實際上它比做一杯咖啡還簡單。我們將從官方網站下載RabbitMQ，並遵循步驟來在您的機器上設置它。別忘了確認Erlan">
+<meta property="og:description" content="引言在現代應用程序開發中，日誌記錄是診斷、監控和分析系統運行狀態的重要工具。當應用程序規模擴大，涉及多個服務或節點時，傳統的日誌文件管理方式已無法滿足需求。ELK 堆疊（Elasticsearch、Logstash、Kibana）提供了強大的日誌集中收集、存儲和分析解決方案。本文將詳細介紹如何在 .NET 環境中，使用 ELK 堆疊實現日誌的集中化與分析。 認識 ELK 堆疊ELK 堆疊由三個開源">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2019-08-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-01T04:13:03.653Z">
+<meta property="article:published_time" content="2023-12-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-03T04:32:11.814Z">
 <meta property="article:author" content="Leo Chen">
 <meta property="article:tag" content="程式設計">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>在.NET中與RabbitMQ共舞：實務應用的藝術 - leo200292 Blog</title>
+  <title>使用 .NET 與 ELK Log集中與分析 - leo200292 Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="RabbitMQ"></span>
+            <span id="subtitle" data-typed-text="使用 .NET 與 ELK Log集中與分析"></span>
           
         </div>
 
@@ -237,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2019-08-27 00:00" pubdate>
-          2019年8月27日 凌晨
+        <time datetime="2023-12-19 00:00" pubdate>
+          2023年12月19日 凌晨
         </time>
       </span>
     
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.2k 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          12 分鐘
+          10 分鐘
         
       </span>
     
@@ -297,30 +297,220 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">RabbitMQ</h1>
+            <h1 id="seo-header">使用 .NET 與 ELK Log集中與分析</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="RabbitMQ簡介"><a href="#RabbitMQ簡介" class="headerlink" title="RabbitMQ簡介"></a>RabbitMQ簡介</h1><p>首先，讓我們簡單介紹一下RabbitMQ。它是一個開源消息代理，允許您的應用程式靈活地交換數據。在.NET環境中，RabbitMQ能夠使消息傳遞變得高效且可靠，是許多開發者的首選。</p>
-<h1 id="RabbitMQ的安裝與設置"><a href="#RabbitMQ的安裝與設置" class="headerlink" title="RabbitMQ的安裝與設置"></a>RabbitMQ的安裝與設置</h1><p>安裝RabbitMQ可能看起來像是攀登珠穆朗瑪峰，但實際上它比做一杯咖啡還簡單。我們將從官方網站下載RabbitMQ，並遵循步驟來在您的機器上設置它。別忘了確認Erlang環境，因為RabbitMQ需要它來運行。</p>
-<h1 id="與-NET的整合"><a href="#與-NET的整合" class="headerlink" title="與.NET的整合"></a>與.NET的整合</h1><p>整合RabbitMQ與.NET的過程可以比喻為搭建樂高積木。您需要NuGet包，例如RabbitMQ.Client來建立連接，發送和接收消息。我們將通過一個簡單的例子來展示如何在C#應用程式中實現這一過程。</p>
-<h1 id="實務應用技巧"><a href="#實務應用技巧" class="headerlink" title="實務應用技巧"></a>實務應用技巧</h1><p>消息發送： 我們將展示如何在.NET應用程式中創建和發送消息。<br>消息接收： 這裡我們將學習如何接收和處理來自RabbitMQ的消息。<br>錯誤處理和重試機制： 當然，世界並不完美，我們將介紹如何在遇到消息傳遞問題時處理錯誤。<br>性能最佳化： 最後，我們會探索一些技巧來提高您應用程式的性能。</p>
-<h1 id="進階應用：理解交換器和隊列"><a href="#進階應用：理解交換器和隊列" class="headerlink" title="進階應用：理解交換器和隊列"></a>進階應用：理解交換器和隊列</h1><p>交換器類型： 我們會介紹RabbitMQ中不同類型的交換器，包括直接、主題、扇出和頭交換器，並解釋它們各自的使用場景。<br>隊列綁定： 學習如何將隊列綁定到交換器，並理解路由鍵的重要性。<br>安全和管理：</p>
-<p>使用者管理： 我們將介紹如何在RabbitMQ中創建和管理使用者，以及如何分配適當的角色和權限。<br>監控和日誌： 了解如何監控RabbitMQ實例的性能，並查看日誌來診斷可能的問題。</p>
-<p>我們將通過一個實際案例來展示在.NET中使用RabbitMQ的全部過程，從設置到消息處理，再到性能最佳化。</p>
-<p>集群和高可用性<br>建立集群：<br>集群設置是RabbitMQ實現高可用性和負載均衡的關鍵。在.NET環境中，我們可以通過幾個簡單的步驟來配置RabbitMQ集群。這包括在多台機器上安裝RabbitMQ服務並將它們互相連接。一旦集群建立，您的應用將能夠在多個節點之間分散負載，這增加了系統的可靠性和彈性。</p>
-<p>鏡像隊列：<br>鏡像隊列是RabbitMQ中一種重要的高可用性機制。它通過在集群中的多個節點上複製隊列來保證消息的持續性和可用性。如果主節點失效，其中一個鏡像節點將接管角色，確保消息處理不會中斷。這對於構建可靠的消息系統來說至關重要。</p>
-<h1 id="結合實際案例"><a href="#結合實際案例" class="headerlink" title="結合實際案例"></a>結合實際案例</h1><p>為了更好地理解RabbitMQ在.NET應用中的使用，讓我們來看一個實際的案例：</p>
-<p>案例背景：<br>假設有一家電子商務公司需要處理大量的訂單消息。這些消息包括訂單創建、支付處理和庫存更新。公司選擇使用RabbitMQ作為其消息中間件，並在.NET環境中實現相關功能。</p>
-<p>設置和配置：<br>首先，公司在三台伺服器上安裝並運行RabbitMQ，建立一個集群環境。接著，他們在每個重要隊列上啟用鏡像功能，以確保消息的高可用性。</p>
-<p>實現負載均衡：<br>.NET應用通過RabbitMQ客戶端連接到集群。應用根據訂單的類型和處理優先級，將消息發送到不同的隊列。RabbitMQ集群自動處理負載均衡，確保消息平均分配到各個節點。</p>
-<p>故障轉移和恢復：<br>在出現節點故障的情況下，鏡像隊列確保消息不會丟失，並允許另一個節點接管消息處理，實現無縫故障轉移。</p>
-<p>性能最佳化：<br>公司持續監控RabbitMQ集群的性能，並根據需要進行調整。例如，他們可能會增加更多的鏡像節點，或調整消息路由策略來提高處理效率。</p>
-<p>總結與建議<br>RabbitMQ在.NET環境中的應用展示了它作為消息中間件的強大能力。無論是處理高流量的訂單處理系統、實現複雜的業務邏輯，還是構建分散式應用，RabbitMQ都能提供穩定且高效的解決方案。</p>
-<h1 id="建議"><a href="#建議" class="headerlink" title="建議"></a>建議</h1><p>持續監控： 定期監控RabbitMQ集群的健康狀態，以確保系統的穩定性和效能。<br>靈活調整： 根據應用需求和系統負荷，適時調整集群配置和鏡像策略。<br>深入學習： 為了更好地利用RabbitMQ，建議深入研究其高級特性，如交換器配置、消息路由策略等。</p>
-<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>RabbitMQ的強大之處不僅在於它作為一個消息隊列的基本功能，更在於它為構建高可靠、可擴展的.NET應用提供了廣闊的可能性。無論是創業公司還是大型企業，RabbitMQ都是實現高效消息處理和系統整合的理想選擇。</p>
-<p>希望這篇能為您在.NET環境中使用RabbitMQ提供實用的見解和指引。如有任何疑問或想深入探討特定主題，歡迎留言交流。</p>
+                <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>在現代應用程序開發中，日誌記錄是診斷、監控和分析系統運行狀態的重要工具。當應用程序規模擴大，涉及多個服務或節點時，傳統的日誌文件管理方式已無法滿足需求。ELK 堆疊（Elasticsearch、Logstash、Kibana）提供了強大的日誌集中收集、存儲和分析解決方案。本文將詳細介紹如何在 .NET 環境中，使用 ELK 堆疊實現日誌的集中化與分析。</p>
+<h1 id="認識-ELK-堆疊"><a href="#認識-ELK-堆疊" class="headerlink" title="認識 ELK 堆疊"></a>認識 ELK 堆疊</h1><p>ELK 堆疊由三個開源產品組成：</p>
+<ul>
+<li><strong>Elasticsearch</strong>：分佈式搜索和分析引擎，用於存儲和查詢日誌數據。</li>
+<li><strong>Logstash</strong>：數據處理管道工具，用於收集、處理和轉發日誌數據。</li>
+<li><strong>Kibana</strong>：數據視覺化平台，用於搜索、查看和分析存儲在 Elasticsearch 中的數據。</li>
+</ul>
+<h1 id="搭建-ELK-環境"><a href="#搭建-ELK-環境" class="headerlink" title="搭建 ELK 環境"></a>搭建 ELK 環境</h1><p>以下是在 Windows 環境下安裝 ELK 堆疊的步驟。</p>
+<h2 id="安裝-Elasticsearch"><a href="#安裝-Elasticsearch" class="headerlink" title="安裝 Elasticsearch"></a>安裝 Elasticsearch</h2><ol>
+<li><p><strong>下載 Elasticsearch</strong>：訪問 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/elasticsearch">Elasticsearch 官方下載頁面</a>，選擇適合的版本。</p>
+</li>
+<li><p><strong>解壓文件</strong>：將下載的壓縮包解壓到指定目錄。</p>
+</li>
+<li><p><strong>運行 Elasticsearch</strong>：</p>
+<ul>
+<li><p>打開命令提示符，進入 <code>bin</code> 目錄。</p>
+</li>
+<li><p>運行以下命令啟動服務：</p>
+<pre>
+elasticsearch.bat
+</pre></li>
+</ul>
+</li>
+<li><p><strong>驗證安裝</strong>：在瀏覽器中訪問 <code>http://localhost:9200</code>，應顯示 Elasticsearch 的基本信息。</p>
+</li>
+</ol>
+<h2 id="安裝-Logstash"><a href="#安裝-Logstash" class="headerlink" title="安裝 Logstash"></a>安裝 Logstash</h2><ol>
+<li><p><strong>下載 Logstash</strong>：訪問 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/logstash">Logstash 官方下載頁面</a>。</p>
+</li>
+<li><p><strong>解壓文件</strong>：將下載的壓縮包解壓到指定目錄。</p>
+</li>
+<li><p><strong>創建配置文件</strong>：</p>
+<ul>
+<li><p>在 Logstash 目錄下創建一個名為 <code>logstash.conf</code> 的配置文件，內容如下：</p>
+<pre>
+input {
+  http {
+    port => 5000
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["localhost:9200"]
+    index => "logs-%{+YYYY.MM.dd}"
+  }
+  stdout { codec => rubydebug }
+}
+</pre></li>
+</ul>
+</li>
+<li><p><strong>運行 Logstash</strong>：</p>
+<ul>
+<li><p>打開命令提示符，進入 <code>bin</code> 目錄。</p>
+</li>
+<li><p>運行以下命令啟動 Logstash：</p>
+<pre>
+logstash.bat -f path\to\logstash.conf
+</pre></li>
+</ul>
+</li>
+</ol>
+<h2 id="安裝-Kibana"><a href="#安裝-Kibana" class="headerlink" title="安裝 Kibana"></a>安裝 Kibana</h2><ol>
+<li><p><strong>下載 Kibana</strong>：訪問 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/kibana">Kibana 官方下載頁面</a>。</p>
+</li>
+<li><p><strong>解壓文件</strong>：將下載的壓縮包解壓到指定目錄。</p>
+</li>
+<li><p><strong>配置 Kibana</strong>：</p>
+<ul>
+<li><p>編輯 <code>config/kibana.yml</code> 文件，確保 Elasticsearch 的地址配置正確：</p>
+<pre>
+elasticsearch.hosts: ["http://localhost:9200"]
+</pre></li>
+</ul>
+</li>
+<li><p><strong>運行 Kibana</strong>：</p>
+<ul>
+<li><p>打開命令提示符，進入 <code>bin</code> 目錄。</p>
+</li>
+<li><p>運行以下命令啟動 Kibana：</p>
+<pre>
+kibana.bat</li>
+</ul>
+<p> </pre></p>
+</li>
+<li><p><strong>驗證安裝</strong>：在瀏覽器中訪問 <code>http://localhost:5601</code>，應顯示 Kibana 的界面。</p>
+</li>
+</ol>
+<h1 id="配置-NET-應用程序進行日誌記錄"><a href="#配置-NET-應用程序進行日誌記錄" class="headerlink" title="配置 .NET 應用程序進行日誌記錄"></a>配置 .NET 應用程序進行日誌記錄</h1><p>我們將使用 Serilog 作為日誌記錄框架，並使用 Serilog.Sinks.Elasticsearch 將日誌發送到 Elasticsearch。</p>
+<h2 id="使用-Serilog"><a href="#使用-Serilog" class="headerlink" title="使用 Serilog"></a>使用 Serilog</h2><h3 id="創建-NET-應用程序："><a href="#創建-NET-應用程序：" class="headerlink" title="創建 .NET 應用程序："></a>創建 .NET 應用程序：</h3><ol>
+<li>打開 Visual Studio，創建一個新的 .NET Core 控制台應用程序。</li>
+</ol>
+<h3 id="安裝-NuGet-套件："><a href="#安裝-NuGet-套件：" class="headerlink" title="安裝 NuGet 套件："></a>安裝 NuGet 套件：</h3><ol>
+<li>右鍵點擊項目，選擇 <strong>管理 NuGet 套件</strong>。</li>
+<li>搜索並安裝以下套件：<ul>
+<li>Serilog</li>
+<li>Serilog.Sinks.Elasticsearch</li>
+<li>Serilog.Sinks.Console</li>
+</ul>
+</li>
+</ol>
+<h3 id="配置-Serilog-輸出到-Elasticsearch"><a href="#配置-Serilog-輸出到-Elasticsearch" class="headerlink" title="配置 Serilog 輸出到 Elasticsearch"></a>配置 Serilog 輸出到 Elasticsearch</h3><p>在 <code>Program.cs</code> 中:</p>
+<pre>
+using System;
+using Serilog;
+
+namespace ELKLoggingDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 配置 Serilog
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.WithProperty("Application", "ELKLoggingDemo")
+                .WriteTo.Console()
+                .WriteTo.Elasticsearch(new Serilog.Sinks.Elasticsearch.ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+                {
+                    AutoRegisterTemplate = true,
+                    IndexFormat = "logs-{0:yyyy.MM.dd}"
+                })
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("應用程序開始運行");
+                // 模擬一些操作
+                Log.Warning("這是一個警告信息");
+                throw new Exception("模擬異常");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "發生了異常");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        }
+    }
+}
+</pre>
+
+<h3 id="說明："><a href="#說明：" class="headerlink" title="說明："></a>說明：</h3><ul>
+<li><code>Enrich.WithProperty</code>：為日誌添加全局屬性，方便在 Kibana 中過濾。</li>
+<li><code>WriteTo.Console()</code>：將日誌輸出到控制台。</li>
+<li><code>WriteTo.Elasticsearch()</code>：配置 Elasticsearch 輸出，指定 Elasticsearch 的地址和索引格式。</li>
+</ul>
+<h2 id="測試日誌記錄"><a href="#測試日誌記錄" class="headerlink" title="測試日誌記錄"></a>測試日誌記錄</h2><p>運行應用程序，您應能在控制台看到日誌輸出。同時，日誌也被發送到 Elasticsearch。</p>
+<h2 id="在-Kibana-中分析日誌"><a href="#在-Kibana-中分析日誌" class="headerlink" title="在 Kibana 中分析日誌"></a>在 Kibana 中分析日誌</h2><h3 id="建立索引模式"><a href="#建立索引模式" class="headerlink" title="建立索引模式"></a>建立索引模式</h3><ol>
+<li>打開 Kibana：在瀏覽器中訪問 <code>http://localhost:5601</code>。</li>
+<li>建立索引模式：<ul>
+<li>導航到 <strong>Management -&gt; Stack Management -&gt; Index Patterns</strong>。</li>
+<li>點擊 <strong>Create index pattern</strong>。</li>
+<li>在 <strong>Index pattern</strong> 中輸入 <code>logs-*</code>，點擊 <strong>Next step</strong>。</li>
+<li>選擇時間字段（如果有），然後點擊 <strong>Create index pattern</strong>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用-Discover-功能"><a href="#使用-Discover-功能" class="headerlink" title="使用 Discover 功能"></a>使用 Discover 功能</h3><ol>
+<li>導航到 Discover：<ul>
+<li>在左側菜單中點擊 <strong>Discover</strong>。</li>
+<li>選擇剛創建的索引模式 <code>logs-*</code>。</li>
+</ul>
+</li>
+<li>查看日誌：<ul>
+<li>您應能看到從 .NET 應用程序發送的日誌。</li>
+<li>可以使用搜索和過濾功能定位特定的日誌。</li>
+</ul>
+</li>
+</ol>
+<h3 id="創建視覺化圖表"><a href="#創建視覺化圖表" class="headerlink" title="創建視覺化圖表"></a>創建視覺化圖表</h3><ol>
+<li>創建視覺化圖表：<ul>
+<li>點擊 <strong>Visualize Library -&gt; Create visualization</strong>。</li>
+<li>選擇圖表類型（例如，柱狀圖、餅圖）。</li>
+</ul>
+</li>
+<li>配置數據源：<ul>
+<li>選擇索引模式 <code>logs-*</code>。</li>
+<li>配置聚合方式，例如按日誌級別統計數量。</li>
+</ul>
+</li>
+<li>保存視覺化圖表：<ul>
+<li>配置完成後，點擊 <strong>Save</strong>，為視覺化圖表命名。</li>
+</ul>
+</li>
+</ol>
+<h3 id="建立儀表板"><a href="#建立儀表板" class="headerlink" title="建立儀表板"></a>建立儀表板</h3><ol>
+<li>創建儀表板：<ul>
+<li>點擊 <strong>Dashboard -&gt; Create dashboard</strong>。</li>
+</ul>
+</li>
+<li>添加視覺化圖表：<ul>
+<li>點擊 <strong>Add</strong>，選擇剛創建的視覺化圖表。</li>
+</ul>
+</li>
+<li>保存儀表板：<ul>
+<li>點擊 <strong>Save</strong>，為儀表板命名。</li>
+</ul>
+</li>
+</ol>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>通過上述步驟，我們成功地在 .NET 應用程序中集成了 ELK 堆疊，實現了日誌的集中化收集和分析。這種方式有助於更好地監控應用程序的運行情況，快速定位和解決問題。</p>
+<h2 id="參考資源"><a href="#參考資源" class="headerlink" title="參考資源"></a>參考資源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/index.html">Elasticsearch 官方文檔</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/logstash/index.html">Logstash 官方文檔</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/kibana/index.html">Kibana 官方文檔</a></li>
+<li><a target="_blank" rel="noopener" href="https://serilog.net/">Serilog 官方網站</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/serilog/serilog-sinks-elasticsearch">Serilog.Sinks.Elasticsearch GitHub</a></li>
+</ul>
 
                 
               </div>
@@ -328,27 +518,6 @@
             <hr/>
             <div>
               <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Other-Tech/" class="category-chain-item">Other Tech</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
   
   
     <div class="post-meta">
@@ -368,9 +537,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/11/01/2020-11-01-deploy/" title=".NET Core">
+                      <a href="/2024/10/04/2024-10-04-Side%20Project/" title="Side Project">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">.NET Core</span>
+                        <span class="hidden-mobile">Side Project</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -378,8 +547,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2017/04/09/2017-05-24-DevExtreme/" title="DevExtreme">
-                        <span class="hidden-mobile">DevExtreme</span>
+                      <a href="/2023/05/20/2023-05-20-%E8%B3%87%E6%B7%B1%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%92%8C%E6%96%B0%E4%BA%BA%E5%B7%A5%E7%A8%8B%E5%B8%AB%E4%B9%8B%E9%96%93%E7%9A%84%E5%B7%AE%E7%95%B0/" title="資深工程師和新人工程師之間的差異">
+                        <span class="hidden-mobile">資深工程師和新人工程師之間的差異</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -399,8 +568,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://leoprocess.github.io/2019/08/27/2019-08-27-RabbitMQ/';
-          this.page.identifier = '/2019/08/27/2019-08-27-RabbitMQ/';
+          this.page.url = 'https://leoprocess.github.io/2023/12/19/2023-12-19-%E4%BD%BF%E7%94%A8%20.NET%20%E8%88%87%20ELK%20Log%E9%9B%86%E4%B8%AD%E8%88%87%E5%88%86%E6%9E%90/';
+          this.page.identifier = '/2023/12/19/2023-12-19-%E4%BD%BF%E7%94%A8%20.NET%20%E8%88%87%20ELK%20Log%E9%9B%86%E4%B8%AD%E8%88%87%E5%88%86%E6%9E%90/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');

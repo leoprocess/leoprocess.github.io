@@ -16,24 +16,24 @@
   <meta name="author" content="Leo">
   <meta name="keywords" content="">
   
-    <meta name="description" content="筆記最近工作上遇到，kendoMultiSelect進畫面時 要先讀取資料庫的值 原先的畫面就單純的把全部的選項放上去給User選取 現在要先讀取資料庫的值 顯示原本選取的值。 剛好telerik上的範例可以拿來改 哈哈 就參考囉~  先將DataSource全部選項帶入 已知DataSource內有選項 “5”, “6”, “7” 所以當成已存在資料庫  當已進入畫面就取出 “5”, “6”,">
+    <meta name="description" content="日誌框架介紹與比較在.NET開發中，NLog、log4net和Serilog都是三個常見的日誌框架，它們各有特點，適合不同需求。以下將從各框架的設計理念、功能特性、配置方式、效能和適用場景等方面進行深入探討。 1. 設計理念 NLog：設計上注重高效能，強調在大量日誌記錄需求下的效能表現。NLog的優勢在於目標（Target）配置靈活，適合高流量、高頻日誌寫入場景。  log4net：延續了log">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KendoUI">
-<meta property="og:url" content="https://leoprocess.github.io/2017/03/14/2017-03-14-KendoUI/index.html">
+<meta property="og:title" content="NLog vs log4net vs Serilog的比較">
+<meta property="og:url" content="https://leoprocess.github.io/2020/12/23/2020-12-23-NLog%20log4net%20Serilog%20%E6%AF%94%E8%BC%83/index.html">
 <meta property="og:site_name" content="leo200292 Blog">
-<meta property="og:description" content="筆記最近工作上遇到，kendoMultiSelect進畫面時 要先讀取資料庫的值 原先的畫面就單純的把全部的選項放上去給User選取 現在要先讀取資料庫的值 顯示原本選取的值。 剛好telerik上的範例可以拿來改 哈哈 就參考囉~  先將DataSource全部選項帶入 已知DataSource內有選項 “5”, “6”, “7” 所以當成已存在資料庫  當已進入畫面就取出 “5”, “6”,">
+<meta property="og:description" content="日誌框架介紹與比較在.NET開發中，NLog、log4net和Serilog都是三個常見的日誌框架，它們各有特點，適合不同需求。以下將從各框架的設計理念、功能特性、配置方式、效能和適用場景等方面進行深入探討。 1. 設計理念 NLog：設計上注重高效能，強調在大量日誌記錄需求下的效能表現。NLog的優勢在於目標（Target）配置靈活，適合高流量、高頻日誌寫入場景。  log4net：延續了log">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2017-03-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-01T04:06:26.977Z">
+<meta property="article:published_time" content="2020-12-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-03T12:34:27.833Z">
 <meta property="article:author" content="Leo Chen">
-<meta property="article:tag" content="筆記">
+<meta property="article:tag" content="程式設計">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>KendoUI - leo200292 Blog</title>
+  <title>NLog vs log4net vs Serilog的比較 - leo200292 Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="kendoMultiSelect-預設選取存取"></span>
+            <span id="subtitle" data-typed-text="NLog vs log4net vs Serilog的比較"></span>
           
         </div>
 
@@ -237,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2017-03-14 00:00" pubdate>
-          2017年3月14日 凌晨
+        <time datetime="2020-12-23 00:00" pubdate>
+          2020年12月23日 凌晨
         </time>
       </span>
     
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          170 字
+          1.2k 字
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          2 分鐘
+          11 分鐘
         
       </span>
     
@@ -297,40 +297,113 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">kendoMultiSelect-預設選取存取</h1>
+            <h1 id="seo-header">NLog vs log4net vs Serilog的比較</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="筆記"><a href="#筆記" class="headerlink" title="筆記"></a>筆記</h1><p>最近工作上遇到，kendoMultiSelect進畫面時</p>
-<p>要先讀取資料庫的值</p>
-<p>原先的畫面就單純的把全部的選項放上去給User選取</p>
-<p>現在要先讀取資料庫的值 顯示原本選取的值。</p>
-<p>剛好telerik上的範例可以拿來改 哈哈 就參考囉~ </p>
-<p>先將DataSource全部選項帶入</p>
-<p>已知DataSource內有選項 “5”, “6”, “7”</p>
-<p>所以當成已存在資料庫 </p>
-<p>當已進入畫面就取出 “5”, “6”, “7” 塞入kendoMultiSelect</p>
-<p>範例如下:</p>
-<pre>
-var dataSource = new kendo.data.DataSource({
-  transport: {
-    read: {
-      url: "https://demos.telerik.com/kendo-ui/service/products",
-      dataType: "jsonp"
-    }
-  }
-});
-$("#multiselect").kendoMultiSelect({
-  dataSource: dataSource,
-  dataTextField: "ProductName",
-  dataValueField: "ProductID"
-});
-  var multiselect = $('#multiselect').data("kendoMultiSelect");
-   var selected = multiselect.value();
-    var res = $.merge( $.merge([], selected),  ["5", "6", "7"]);
-    multiselect.value(res);
-</pre>
+                <p>日誌框架介紹與比較<br>在.NET開發中，NLog、log4net和Serilog都是三個常見的日誌框架，它們各有特點，適合不同需求。以下將從各框架的<strong>設計理念</strong>、<strong>功能特性</strong>、<strong>配置方式</strong>、<strong>效能</strong>和<strong>適用場景</strong>等方面進行深入探討。</p>
+<h3 id="1-設計理念"><a href="#1-設計理念" class="headerlink" title="1. 設計理念"></a>1. 設計理念</h3><ul>
+<li><p><strong>NLog</strong>：設計上注重<strong>高效能</strong>，強調在大量日誌記錄需求下的效能表現。NLog的優勢在於目標（Target）配置靈活，適合高流量、高頻日誌寫入場景。</p>
+</li>
+<li><p><strong>log4net</strong>：延續了log4j的設計理念，重視<strong>穩定性與兼容性</strong>，配置簡單且支援多種格式輸出。其穩定的特性非常適合企業級應用，但更新速度相對較慢，對於結構化日誌的支援較弱。</p>
+</li>
+<li><p><strong>Serilog</strong>：以<strong>結構化日誌</strong>為核心設計理念，支援以JSON格式輸出，適合結構化數據的儲存和查詢。其生態系統活躍、功能強大，能輕鬆整合現代的日誌分析工具（如ElasticSearch、Seq），適合需要日誌分析的應用。</p>
+</li>
+</ul>
+<h3 id="2-功能特性比較"><a href="#2-功能特性比較" class="headerlink" title="2. 功能特性比較"></a>2. 功能特性比較</h3><table>
+<thead>
+<tr>
+<th>框架</th>
+<th>日誌格式支援</th>
+<th>結構化日誌支援</th>
+<th>多目標支持</th>
+<th>動態配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NLog</td>
+<td>JSON, XML, 純文字</td>
+<td>❌</td>
+<td>✅</td>
+<td>支援 XML 配置</td>
+</tr>
+<tr>
+<td>log4net</td>
+<td>XML, 純文字</td>
+<td>❌</td>
+<td>✅</td>
+<td>支援 XML 配置</td>
+</tr>
+<tr>
+<td>Serilog</td>
+<td>JSON, 純文字</td>
+<td>✅</td>
+<td>✅</td>
+<td>支援程式內配置</td>
+</tr>
+</tbody></table>
+<h3 id="3-配置方式與靈活性"><a href="#3-配置方式與靈活性" class="headerlink" title="3. 配置方式與靈活性"></a>3. 配置方式與靈活性</h3><ul>
+<li><p><strong>NLog</strong>：NLog主要透過XML配置檔來定義日誌的輸出目標（Targets）和格式（Layouts）。使用者可以輕鬆地配置多個輸出目標，例如檔案、電子郵件、資料庫等。此外，NLog還支援JSON配置，提升了配置的靈活性。</p>
+</li>
+<li><p><strong>log4net</strong>：log4net配置主要以XML為主，且支援多層次日誌等級的設定，使其適合分層架構。配置較簡單但相對靜態，若需動態調整需重啟應用程式。</p>
+</li>
+<li><p><strong>Serilog</strong>：Serilog支持程式碼內配置，讓開發者可以根據不同環境需求靈活調整設定。此外，Serilog還支援結構化日誌和Sinks（接收器），使其能將日誌導出至多個目標，包括ELK、Seq等日誌管理平台。</p>
+</li>
+</ul>
+<h3 id="4-效能對比"><a href="#4-效能對比" class="headerlink" title="4. 效能對比"></a>4. 效能對比</h3><ul>
+<li><p><strong>NLog</strong>：NLog在效能上表現優異，尤其是對於大量日誌寫入需求，透過BufferingWrapper等機制減少I&#x2F;O操作。這使得NLog成為高效能日誌框架的首選，適合高並發、高頻寫入的應用場景。</p>
+</li>
+<li><p><strong>log4net</strong>：log4net相對於其他框架，效能不算最佳，特別是在高頻日誌寫入的情況下，會受到一些限制。然而在穩定性和兼容性上，log4net表現穩健，適合對效能要求不高的系統。</p>
+</li>
+<li><p><strong>Serilog</strong>：Serilog因結構化日誌的設計，效能稍弱於NLog，但在結構化數據處理上有著不可替代的優勢。對於需要持續分析和監控日誌的應用場景，Serilog提供了更高的價值。</p>
+</li>
+</ul>
+<h3 id="5-適用場景"><a href="#5-適用場景" class="headerlink" title="5. 適用場景"></a>5. 適用場景</h3><ul>
+<li><p><strong>NLog</strong>：適合需要高效能、配置靈活的應用。例如Web伺服器、API Gateway等，能有效處理高頻日誌輸出，並支援多種輸出格式和目標。</p>
+</li>
+<li><p><strong>log4net</strong>：穩定性和兼容性強，適合成熟的企業級應用，尤其是在對日誌分析需求較低、但需要可靠運行的情況下，log4net提供了足夠的功能。</p>
+</li>
+<li><p><strong>Serilog</strong>：專為結構化日誌設計，適合需要將日誌用於數據分析的應用，如微服務架構的系統、需結合日誌平台進行監控和查詢的系統。Serilog與ELK、Seq等平台的整合，使其在數據分析方面具有巨大優勢。</p>
+</li>
+</ul>
+<p>總結與選擇建議</p>
+<h3 id="總結表"><a href="#總結表" class="headerlink" title="總結表"></a>總結表</h3><table>
+<thead>
+<tr>
+<th>框架</th>
+<th>優點</th>
+<th>缺點</th>
+<th>適合場景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NLog</td>
+<td>高效能、配置靈活、多目標支持</td>
+<td>錯誤處理相對較弱</td>
+<td>高並發應用、大量日誌寫入需求</td>
+</tr>
+<tr>
+<td>log4net</td>
+<td>穩定性強、歷史悠久、兼容性好</td>
+<td>更新慢、效能稍遜</td>
+<td>企業級應用、穩定性需求高</td>
+</tr>
+<tr>
+<td>Serilog</td>
+<td>結構化日誌、支持JSON格式、與日誌分析平台整合</td>
+<td>配置複雜、效能稍遜</td>
+<td>日誌分析需求高的應用、微服務架構</td>
+</tr>
+</tbody></table>
+<h3 id="選擇建議"><a href="#選擇建議" class="headerlink" title="選擇建議"></a>選擇建議</h3><ul>
+<li><p><strong>如果您的應用程式需要高效能並希望靈活配置多種輸出</strong>，那麼<strong>NLog</strong>是非常合適的選擇，特別是應用於日誌寫入頻繁的系統。</p>
+</li>
+<li><p><strong>如果您希望有一個穩定可靠且已被廣泛使用的解決方案</strong>，且對日誌的結構化需求不高，那麼選擇<strong>log4net</strong>會比較適合。</p>
+</li>
+<li><p><strong>如果您的系統是基於微服務或需要將日誌進行結構化儲存以便進行數據分析</strong>，則建議使用<strong>Serilog</strong>。Serilog的結構化日誌和與日誌分析平台的整合，能大大提升日誌數據的價值。</p>
+</li>
+</ul>
 
                 
               </div>
@@ -339,32 +412,11 @@ $("#multiselect").kendoMultiSelect({
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%AD%86%E8%A8%98/" class="category-chain-item">筆記</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%AD%86%E8%A8%98/" class="print-no-link">#筆記</a>
+        <a href="/tags/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88/" class="print-no-link">#程式設計</a>
       
     </div>
   
@@ -378,9 +430,9 @@ $("#multiselect").kendoMultiSelect({
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2017/04/09/2017-05-24-DevExtreme/" title="DevExtreme">
+                      <a href="/2022/03/09/2022-03-09-Fly.io%E5%B9%B3%E5%8F%B0%20.NET%20Core%E9%83%A8%E7%BD%B2%E7%AD%86%E8%A8%98/" title="在 Fly.io 平台部署 .NET Core 應用">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">DevExtreme</span>
+                        <span class="hidden-mobile">在 Fly.io 平台部署 .NET Core 應用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -388,8 +440,8 @@ $("#multiselect").kendoMultiSelect({
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2017/02/14/2017-02-14-2017_NewBlog/" title="New">
-                        <span class="hidden-mobile">New</span>
+                      <a href="/2020/11/01/2020-11-01-deploy/" title=".NET Core">
+                        <span class="hidden-mobile">.NET Core</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -409,8 +461,8 @@ $("#multiselect").kendoMultiSelect({
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://leoprocess.github.io/2017/03/14/2017-03-14-KendoUI/';
-          this.page.identifier = '/2017/03/14/2017-03-14-KendoUI/';
+          this.page.url = 'https://leoprocess.github.io/2020/12/23/2020-12-23-NLog%20log4net%20Serilog%20%E6%AF%94%E8%BC%83/';
+          this.page.identifier = '/2020/12/23/2020-12-23-NLog%20log4net%20Serilog%20%E6%AF%94%E8%BC%83/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');

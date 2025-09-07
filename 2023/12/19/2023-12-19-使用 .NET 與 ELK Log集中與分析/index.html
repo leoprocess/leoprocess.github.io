@@ -1,0 +1,873 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/1704080109.ico">
+  <link rel="icon" href="/img/1704080109.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Leo">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="引言在現代應用程序開發中，日誌記錄是診斷、監控和分析系統運行狀態的重要工具。當應用程序規模擴大，涉及多個服務或節點時，傳統的日誌文件管理方式已無法滿足需求。ELK 堆疊（Elasticsearch、Logstash、Kibana）提供了強大的日誌集中收集、存儲和分析解決方案。本文將詳細介紹如何在 .NET 環境中，使用 ELK 堆疊實現日誌的集中化與分析。 認識 ELK 堆疊ELK 堆疊由三個開源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 .NET 與 ELK Log集中與分析">
+<meta property="og:url" content="https://leoprocess.github.io/2023/12/19/2023-12-19-%E4%BD%BF%E7%94%A8%20.NET%20%E8%88%87%20ELK%20Log%E9%9B%86%E4%B8%AD%E8%88%87%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="leo200292 Blog">
+<meta property="og:description" content="引言在現代應用程序開發中，日誌記錄是診斷、監控和分析系統運行狀態的重要工具。當應用程序規模擴大，涉及多個服務或節點時，傳統的日誌文件管理方式已無法滿足需求。ELK 堆疊（Elasticsearch、Logstash、Kibana）提供了強大的日誌集中收集、存儲和分析解決方案。本文將詳細介紹如何在 .NET 環境中，使用 ELK 堆疊實現日誌的集中化與分析。 認識 ELK 堆疊ELK 堆疊由三個開源">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-12-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-03T04:32:11.814Z">
+<meta property="article:author" content="Leo Chen">
+<meta property="article:tag" content="程式設計">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>使用 .NET 與 ELK Log集中與分析 - leo200292 Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"leoprocess.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Leo&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首頁</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>關於</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文章</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分類</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>標籤</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="使用 .NET 與 ELK Log集中與分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-19 00:00" pubdate>
+          2023年12月19日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分鐘
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">使用 .NET 與 ELK Log集中與分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>在現代應用程序開發中，日誌記錄是診斷、監控和分析系統運行狀態的重要工具。當應用程序規模擴大，涉及多個服務或節點時，傳統的日誌文件管理方式已無法滿足需求。ELK 堆疊（Elasticsearch、Logstash、Kibana）提供了強大的日誌集中收集、存儲和分析解決方案。本文將詳細介紹如何在 .NET 環境中，使用 ELK 堆疊實現日誌的集中化與分析。</p>
+<h1 id="認識-ELK-堆疊"><a href="#認識-ELK-堆疊" class="headerlink" title="認識 ELK 堆疊"></a>認識 ELK 堆疊</h1><p>ELK 堆疊由三個開源產品組成：</p>
+<ul>
+<li><strong>Elasticsearch</strong>：分佈式搜索和分析引擎，用於存儲和查詢日誌數據。</li>
+<li><strong>Logstash</strong>：數據處理管道工具，用於收集、處理和轉發日誌數據。</li>
+<li><strong>Kibana</strong>：數據視覺化平台，用於搜索、查看和分析存儲在 Elasticsearch 中的數據。</li>
+</ul>
+<h1 id="搭建-ELK-環境"><a href="#搭建-ELK-環境" class="headerlink" title="搭建 ELK 環境"></a>搭建 ELK 環境</h1><p>以下是在 Windows 環境下安裝 ELK 堆疊的步驟。</p>
+<h2 id="安裝-Elasticsearch"><a href="#安裝-Elasticsearch" class="headerlink" title="安裝 Elasticsearch"></a>安裝 Elasticsearch</h2><ol>
+<li><p><strong>下載 Elasticsearch</strong>：訪問 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/elasticsearch">Elasticsearch 官方下載頁面</a>，選擇適合的版本。</p>
+</li>
+<li><p><strong>解壓文件</strong>：將下載的壓縮包解壓到指定目錄。</p>
+</li>
+<li><p><strong>運行 Elasticsearch</strong>：</p>
+<ul>
+<li><p>打開命令提示符，進入 <code>bin</code> 目錄。</p>
+</li>
+<li><p>運行以下命令啟動服務：</p>
+<pre>
+elasticsearch.bat
+</pre></li>
+</ul>
+</li>
+<li><p><strong>驗證安裝</strong>：在瀏覽器中訪問 <code>http://localhost:9200</code>，應顯示 Elasticsearch 的基本信息。</p>
+</li>
+</ol>
+<h2 id="安裝-Logstash"><a href="#安裝-Logstash" class="headerlink" title="安裝 Logstash"></a>安裝 Logstash</h2><ol>
+<li><p><strong>下載 Logstash</strong>：訪問 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/logstash">Logstash 官方下載頁面</a>。</p>
+</li>
+<li><p><strong>解壓文件</strong>：將下載的壓縮包解壓到指定目錄。</p>
+</li>
+<li><p><strong>創建配置文件</strong>：</p>
+<ul>
+<li><p>在 Logstash 目錄下創建一個名為 <code>logstash.conf</code> 的配置文件，內容如下：</p>
+<pre>
+input {
+  http {
+    port => 5000
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["localhost:9200"]
+    index => "logs-%{+YYYY.MM.dd}"
+  }
+  stdout { codec => rubydebug }
+}
+</pre></li>
+</ul>
+</li>
+<li><p><strong>運行 Logstash</strong>：</p>
+<ul>
+<li><p>打開命令提示符，進入 <code>bin</code> 目錄。</p>
+</li>
+<li><p>運行以下命令啟動 Logstash：</p>
+<pre>
+logstash.bat -f path\to\logstash.conf
+</pre></li>
+</ul>
+</li>
+</ol>
+<h2 id="安裝-Kibana"><a href="#安裝-Kibana" class="headerlink" title="安裝 Kibana"></a>安裝 Kibana</h2><ol>
+<li><p><strong>下載 Kibana</strong>：訪問 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/kibana">Kibana 官方下載頁面</a>。</p>
+</li>
+<li><p><strong>解壓文件</strong>：將下載的壓縮包解壓到指定目錄。</p>
+</li>
+<li><p><strong>配置 Kibana</strong>：</p>
+<ul>
+<li><p>編輯 <code>config/kibana.yml</code> 文件，確保 Elasticsearch 的地址配置正確：</p>
+<pre>
+elasticsearch.hosts: ["http://localhost:9200"]
+</pre></li>
+</ul>
+</li>
+<li><p><strong>運行 Kibana</strong>：</p>
+<ul>
+<li><p>打開命令提示符，進入 <code>bin</code> 目錄。</p>
+</li>
+<li><p>運行以下命令啟動 Kibana：</p>
+<pre>
+kibana.bat</li>
+</ul>
+<p> </pre></p>
+</li>
+<li><p><strong>驗證安裝</strong>：在瀏覽器中訪問 <code>http://localhost:5601</code>，應顯示 Kibana 的界面。</p>
+</li>
+</ol>
+<h1 id="配置-NET-應用程序進行日誌記錄"><a href="#配置-NET-應用程序進行日誌記錄" class="headerlink" title="配置 .NET 應用程序進行日誌記錄"></a>配置 .NET 應用程序進行日誌記錄</h1><p>我們將使用 Serilog 作為日誌記錄框架，並使用 Serilog.Sinks.Elasticsearch 將日誌發送到 Elasticsearch。</p>
+<h2 id="使用-Serilog"><a href="#使用-Serilog" class="headerlink" title="使用 Serilog"></a>使用 Serilog</h2><h3 id="創建-NET-應用程序："><a href="#創建-NET-應用程序：" class="headerlink" title="創建 .NET 應用程序："></a>創建 .NET 應用程序：</h3><ol>
+<li>打開 Visual Studio，創建一個新的 .NET Core 控制台應用程序。</li>
+</ol>
+<h3 id="安裝-NuGet-套件："><a href="#安裝-NuGet-套件：" class="headerlink" title="安裝 NuGet 套件："></a>安裝 NuGet 套件：</h3><ol>
+<li>右鍵點擊項目，選擇 <strong>管理 NuGet 套件</strong>。</li>
+<li>搜索並安裝以下套件：<ul>
+<li>Serilog</li>
+<li>Serilog.Sinks.Elasticsearch</li>
+<li>Serilog.Sinks.Console</li>
+</ul>
+</li>
+</ol>
+<h3 id="配置-Serilog-輸出到-Elasticsearch"><a href="#配置-Serilog-輸出到-Elasticsearch" class="headerlink" title="配置 Serilog 輸出到 Elasticsearch"></a>配置 Serilog 輸出到 Elasticsearch</h3><p>在 <code>Program.cs</code> 中:</p>
+<pre>
+using System;
+using Serilog;
+
+namespace ELKLoggingDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 配置 Serilog
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.WithProperty("Application", "ELKLoggingDemo")
+                .WriteTo.Console()
+                .WriteTo.Elasticsearch(new Serilog.Sinks.Elasticsearch.ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+                {
+                    AutoRegisterTemplate = true,
+                    IndexFormat = "logs-{0:yyyy.MM.dd}"
+                })
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("應用程序開始運行");
+                // 模擬一些操作
+                Log.Warning("這是一個警告信息");
+                throw new Exception("模擬異常");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "發生了異常");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        }
+    }
+}
+</pre>
+
+<h3 id="說明："><a href="#說明：" class="headerlink" title="說明："></a>說明：</h3><ul>
+<li><code>Enrich.WithProperty</code>：為日誌添加全局屬性，方便在 Kibana 中過濾。</li>
+<li><code>WriteTo.Console()</code>：將日誌輸出到控制台。</li>
+<li><code>WriteTo.Elasticsearch()</code>：配置 Elasticsearch 輸出，指定 Elasticsearch 的地址和索引格式。</li>
+</ul>
+<h2 id="測試日誌記錄"><a href="#測試日誌記錄" class="headerlink" title="測試日誌記錄"></a>測試日誌記錄</h2><p>運行應用程序，您應能在控制台看到日誌輸出。同時，日誌也被發送到 Elasticsearch。</p>
+<h2 id="在-Kibana-中分析日誌"><a href="#在-Kibana-中分析日誌" class="headerlink" title="在 Kibana 中分析日誌"></a>在 Kibana 中分析日誌</h2><h3 id="建立索引模式"><a href="#建立索引模式" class="headerlink" title="建立索引模式"></a>建立索引模式</h3><ol>
+<li>打開 Kibana：在瀏覽器中訪問 <code>http://localhost:5601</code>。</li>
+<li>建立索引模式：<ul>
+<li>導航到 <strong>Management -&gt; Stack Management -&gt; Index Patterns</strong>。</li>
+<li>點擊 <strong>Create index pattern</strong>。</li>
+<li>在 <strong>Index pattern</strong> 中輸入 <code>logs-*</code>，點擊 <strong>Next step</strong>。</li>
+<li>選擇時間字段（如果有），然後點擊 <strong>Create index pattern</strong>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用-Discover-功能"><a href="#使用-Discover-功能" class="headerlink" title="使用 Discover 功能"></a>使用 Discover 功能</h3><ol>
+<li>導航到 Discover：<ul>
+<li>在左側菜單中點擊 <strong>Discover</strong>。</li>
+<li>選擇剛創建的索引模式 <code>logs-*</code>。</li>
+</ul>
+</li>
+<li>查看日誌：<ul>
+<li>您應能看到從 .NET 應用程序發送的日誌。</li>
+<li>可以使用搜索和過濾功能定位特定的日誌。</li>
+</ul>
+</li>
+</ol>
+<h3 id="創建視覺化圖表"><a href="#創建視覺化圖表" class="headerlink" title="創建視覺化圖表"></a>創建視覺化圖表</h3><ol>
+<li>創建視覺化圖表：<ul>
+<li>點擊 <strong>Visualize Library -&gt; Create visualization</strong>。</li>
+<li>選擇圖表類型（例如，柱狀圖、餅圖）。</li>
+</ul>
+</li>
+<li>配置數據源：<ul>
+<li>選擇索引模式 <code>logs-*</code>。</li>
+<li>配置聚合方式，例如按日誌級別統計數量。</li>
+</ul>
+</li>
+<li>保存視覺化圖表：<ul>
+<li>配置完成後，點擊 <strong>Save</strong>，為視覺化圖表命名。</li>
+</ul>
+</li>
+</ol>
+<h3 id="建立儀表板"><a href="#建立儀表板" class="headerlink" title="建立儀表板"></a>建立儀表板</h3><ol>
+<li>創建儀表板：<ul>
+<li>點擊 <strong>Dashboard -&gt; Create dashboard</strong>。</li>
+</ul>
+</li>
+<li>添加視覺化圖表：<ul>
+<li>點擊 <strong>Add</strong>，選擇剛創建的視覺化圖表。</li>
+</ul>
+</li>
+<li>保存儀表板：<ul>
+<li>點擊 <strong>Save</strong>，為儀表板命名。</li>
+</ul>
+</li>
+</ol>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>通過上述步驟，我們成功地在 .NET 應用程序中集成了 ELK 堆疊，實現了日誌的集中化收集和分析。這種方式有助於更好地監控應用程序的運行情況，快速定位和解決問題。</p>
+<h2 id="參考資源"><a href="#參考資源" class="headerlink" title="參考資源"></a>參考資源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/index.html">Elasticsearch 官方文檔</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/logstash/index.html">Logstash 官方文檔</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/kibana/index.html">Kibana 官方文檔</a></li>
+<li><a target="_blank" rel="noopener" href="https://serilog.net/">Serilog 官方網站</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/serilog/serilog-sinks-elasticsearch">Serilog.Sinks.Elasticsearch GitHub</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88/" class="print-no-link">#程式設計</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/04/2024-10-04-Side%20Project/" title="Side Project">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Side Project</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/20/2023-05-20-%E8%B3%87%E6%B7%B1%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%92%8C%E6%96%B0%E4%BA%BA%E5%B7%A5%E7%A8%8B%E5%B8%AB%E4%B9%8B%E9%96%93%E7%9A%84%E5%B7%AE%E7%95%B0/" title="資深工程師和新人工程師之間的差異">
+                        <span class="hidden-mobile">資深工程師和新人工程師之間的差異</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://leoprocess.github.io/2023/12/19/2023-12-19-%E4%BD%BF%E7%94%A8%20.NET%20%E8%88%87%20ELK%20Log%E9%9B%86%E4%B8%AD%E8%88%87%E5%88%86%E6%9E%90/';
+          this.page.identifier = '/2023/12/19/2023-12-19-%E4%BD%BF%E7%94%A8%20.NET%20%E8%88%87%20ELK%20Log%E9%9B%86%E4%B8%AD%E8%88%87%E5%88%86%E6%9E%90/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'leoprocess' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目錄</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        總訪問量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        總訪客數 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允許 JavaScript 運行的環境下瀏覽效果更佳</div>
+  </noscript>
+</body>
+</html>
